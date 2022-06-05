@@ -12,6 +12,7 @@ import routes from "../../routes/definitions";
 import { useDispatch } from "react-redux";
 import reducers from "../../redux/slices";
 import NavBar from "./NavBar";
+import {rivaAuthLogout} from "../../services/AuthService";
 
 export const AppSettings = () => {
     const [auth, setAuth] = React.useState(true);
@@ -19,7 +20,9 @@ export const AppSettings = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const handleSignOut = () => {
+    const handleSignOut = async() => {
+        await rivaAuthLogout();
+
         dispatch(reducers.isSignIn.setIsSignIn(false));
         dispatch(reducers.isEntered.setIsEntered(true));
         navigate(routes.SignIn);

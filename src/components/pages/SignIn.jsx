@@ -30,6 +30,9 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import SocialMedia from "../../assets/Group 260.svg";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
+import { rivaAuthLogin } from "../../services/AuthService";
+import {toast, ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CustomColorCheckbox = withStyles({
     root: {
@@ -62,6 +65,8 @@ const App = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [checked, setChecked] = React.useState(false);
+    const [userName, setUserName] = React.useState("");
+    const [password, setPassword] = React.useState("");
 
     const handleChange = (event) => {
         setChecked(event);
@@ -83,6 +88,18 @@ const App = () => {
         document.removeEventListener('click', function (event) {
             event.preventDefault();
         })
+    }
+
+    const clickSignIn = async () => {
+        const result = await rivaAuthLogin(userName, password);
+        if(result.result) {
+            dispatch(reducers.isSignIn.setIsSignIn(true));
+            dispatch(reducers.animationRoute.setAnimationRoute(routes.LoadingScreen));
+            dispatch(reducers.isSlideAnimationStarted.setIsSlideAnimationStarted({ isStarted: false, up: false }));
+            navigate(routes.Animation);
+        } else {
+            toast.error(result.error, {autoClose:15000})
+        }
     }
 
     return (
@@ -126,8 +143,8 @@ const App = () => {
 
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ width: "100%" }} className="clickable">
                             <h2 className="login-heading">Giriş yap</h2>
-                            <WhiteBorderTextField inputProps={{style:{marginLeft: "10px"}}} className="signin-input" margin="normal" required fullWidth id="userName" placeholder="Kullanıcı Adı" name="userName" autoComplete="userName" autoFocus />
-                            <WhiteBorderTextField inputProps={{style:{marginLeft: "10px"}}} className="signin-input" margin="normal" required fullWidth name="password" placeholder="Şifre" type="password" id="password" autoComplete="current-password" />
+                            <WhiteBorderTextField inputProps={{style:{marginLeft: "10px"}}} className="signin-input" margin="normal" required fullWidth id="userName" placeholder="Kullanıcı Adı" name="userName" autoComplete="userName" autoFocus onChange={(e)=>setUserName(e.target.value)} />
+                            <WhiteBorderTextField inputProps={{style:{marginLeft: "10px"}}} className="signin-input" margin="normal" required fullWidth name="password" placeholder="Şifre" type="password" id="password" autoComplete="current-password" onChange={(e)=>setPassword(e.target.value)} />
                             <Grid container sx={{ marginTop: "10px"}}>
                                 <div className="signin-letter-footer">
                                     <div style={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={() => handleChange(!checked)} className="clickable">
@@ -141,10 +158,7 @@ const App = () => {
                             <div
                                 className="signin-button"
                                 onClick={() => {
-                                    dispatch(reducers.isSignIn.setIsSignIn(true));
-                                    dispatch(reducers.animationRoute.setAnimationRoute(routes.LoadingScreen));
-                                    dispatch(reducers.isSlideAnimationStarted.setIsSlideAnimationStarted({ isStarted: false, up: false }));
-                                    navigate(routes.Animation);
+                                    clickSignIn()
                                 }}
                             >
                                 <ArrowForwardIosIcon sx={{ color: "rgba(#000,0.2) !important",
@@ -210,6 +224,7 @@ const App = () => {
                     }}
                 />
             </Grid>
+            <ToastContainer />
         </div>
     );
 };

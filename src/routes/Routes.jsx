@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, useRoutes } from "react-router-dom";
+import { HashRouter, useRoutes } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import routes from "./definitions";
@@ -40,11 +40,11 @@ const Routes = () => {
     const isSignIn = useSelector((state) => state.isSignIn.value);
 
     return (
-        <BrowserRouter>
+        <HashRouter>
             <AppBar />
             {isSignIn && <AppSettings />}
             <CreateRoutes />
-        </BrowserRouter>
+        </HashRouter>
     );
 };
 
