@@ -20,7 +20,7 @@
           </g>
           <path id="Subtraction_2" data-name="Subtraction 2" d="M275.088,280h0l-130.639,0-33-33.709L112.128,280H0V0H275.088V139.948l-31.549-.655,31.549,32V280ZM110.573,112.547v54.9h56.637v-54.9Z" transform="translate(4.911)" fill="none" stroke="#fff" stroke-width="8"/>
         </g>
-        <text id="RIVA_LAUNCHER" data-name="RIVA LAUNCHER" transform="translate(620 729)" fill="#fff" font-size="56" font-family="Supercell-Magic" letter-spacing="0.25em"><tspan x="-325" y="0">RIVA LAUNCHER</tspan></text>
+        <text id="RIVA_LAUNCHER" data-name="RIVA LAUNCHER" transform="translate(620 729)" fill="#fff" font-size="56" font-family="Supercell-magic" letter-spacing="0.25em"><tspan x="-325" y="0">RIVA LAUNCHER</tspan></text>
       </g>
     </g>
   </svg>
